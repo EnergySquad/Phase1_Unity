@@ -1,22 +1,15 @@
-//correct one:-
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.UI;
 
 public class Login : MonoBehaviour
 {
-    private string apiKey = "NjVjNjA0MGY0Njc3MGQ1YzY2MTcyMmM4OjY1YzYwNDBmNDY3NzBkNWM2NjE3MjJiZQ";
-    private string baseUrl = "http://20.15.114.131:8080/api/login";
+    private const string apiKey = "NjVjNjA0MGY0Njc3MGQ1YzY2MTcyMmM4OjY1YzYwNDBmNDY3NzBkNWM2NjE3MjJiZQ";
+    private const string baseUrl = "http://20.15.114.131:8080/api/login";
+    private const string gamingSceneName = "DisplayPDetails";
+    public SceneLoader sceneLoader;
 
-    private string gamingSceneName = "DisplayPDetails";
-
-
-    //private string TokenKey;
     public static Login Instance { get; private set; }
-    public string TokenKey { get; private set; } = "JWTToken";
+    public static string TokenKey { get; private set; } = "JWTToken";
 
     private void Awake()
     {
@@ -33,59 +26,38 @@ public class Login : MonoBehaviour
 
     public void AuthenticatePlayer()
     {
-       StartCoroutine(AuthenticatePlayerCoroutine());
+        StartCoroutine(AuthenticatePlayerCoroutine());
     }
 
 
     private IEnumerator AuthenticatePlayerCoroutine()
     {
         string requestBody = "{\"apiKey\": \"" + apiKey + "\"}";
+        //Call the Authenticate method from AuthenticationManager
+        IEnumerator authCoroutine = AuthenticationManager.Authenticate(baseUrl, requestBody);
+        yield return StartCoroutine(authCoroutine);
+        string jsonResponse = authCoroutine.Current as string;
 
-        var request = new UnityWebRequest(baseUrl, "POST");
-        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(requestBody);
-        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type", "application/json");
-
-        yield return request.SendWebRequest();
-
-        Debug.Log("Response Code: " + request.responseCode);
-
-        if (request.result == UnityWebRequest.Result.Success)
+        if (jsonResponse != null)
         {
-            string jsonResponse = request.downloadHandler.text;
+            Debug.Log("Received JSON response: " + jsonResponse);
             AuthResponse authResponse = JsonUtility.FromJson<AuthResponse>(jsonResponse);
             string token = authResponse.token;
-            Debug.Log("JWT Token: " + token);
 
             // Save token for future use
             PlayerPrefs.SetString(TokenKey, token);
 
-            LoadGamingScene();
+            // Load the Next scene
+            sceneLoader.GetComponent<SceneLoader>().LoadNextScene(gamingSceneName);
 
         }
         else
         {
-            Debug.LogError("Error: " + request.error);
+            Debug.LogError("Failed to authenticate player!");
         }
+
     }
 
-    private void LoadGamingScene()
-    {
-        if (!string.IsNullOrEmpty(gamingSceneName))
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(gamingSceneName);
-        }
-        else
-        {
-            Debug.LogError("Gaming scene name is not specified!");
-        }
-    }
-
-    public string GetSavedToken()
-    {
-        return PlayerPrefs.GetString(TokenKey, "");
-    }
 
     [System.Serializable]
     public class AuthResponse
