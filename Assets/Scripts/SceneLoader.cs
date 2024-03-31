@@ -1,18 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
+    public DisplayText displayTextAccess;
     public void LoadNextScene(string gamingSceneName)
     {
         if (!string.IsNullOrEmpty(gamingSceneName))
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(gamingSceneName);
+            SceneManager.LoadScene(gamingSceneName);
         }
         else
         {
             Debug.LogError("Gaming scene name is not specified!");
         }
+    }
+
+    public void LoadProfilePage()
+    {
+        LoadNextScene("DisplayPDetails");
+        //displayTextAccess.GetComponent<DisplayText>().DisplayPlayerDetails();
     }
 }

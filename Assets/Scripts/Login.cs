@@ -61,7 +61,7 @@ public class Login : MonoBehaviour
             }
             else
             {
-                sceneLoader.GetComponent<SceneLoader>().LoadNextScene("DisplayPDetails");
+                sceneLoader.GetComponent<SceneLoader>().LoadProfilePage();
             }
 
 

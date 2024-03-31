@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class DisplayText : MonoBehaviour
 {
     private string apiUrl = "http://20.15.114.131:8080/api/user/profile/view";
-    //private string jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvdmVyc2lnaHRfZzMiLCJpYXQiOjE3MTA2NTA0NTYsImV4cCI6MTcxMDY4NjQ1Nn0.-dxC_JUKSNSPvzcOh0Y0q5sAOWIiZTsG-fJeB-0T4JLfTg7QPvZDT7ONpAh0FCbhxOdmG7Z_ivO8kQLzYJdCfA";
+    
     public Text Name;
     public Text Lastname;
     public Text Username;
@@ -16,7 +16,6 @@ public class DisplayText : MonoBehaviour
     public Text PhoneNumber;
     public Text Email;
     public Text ProfilePictureUrl;
-    //Authenticator.Äuthenticate authentication;
 
     [Serializable]
     public class UserProfile
