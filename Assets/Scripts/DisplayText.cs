@@ -11,6 +11,7 @@ public class DisplayText : MonoBehaviour
     //private string jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvdmVyc2lnaHRfZzMiLCJpYXQiOjE3MTA2NTA0NTYsImV4cCI6MTcxMDY4NjQ1Nn0.-dxC_JUKSNSPvzcOh0Y0q5sAOWIiZTsG-fJeB-0T4JLfTg7QPvZDT7ONpAh0FCbhxOdmG7Z_ivO8kQLzYJdCfA";
     public Text Name;
     public Text Lastname;
+    public Text Username;
     public Text NIC;
     public Text PhoneNumber;
     public Text Email;
@@ -55,6 +56,7 @@ public class DisplayText : MonoBehaviour
             ProfileResponse profileResponse = JsonUtility.FromJson<ProfileResponse>(responseBody);
             Name.text = profileResponse.user.firstname;
             Lastname.text = profileResponse.user.lastname;
+            Username.text = profileResponse.user.username;
             NIC.text = profileResponse.user.nic;
             PhoneNumber.text = profileResponse.user.phoneNumber;
             Email.text = profileResponse.user.email;
