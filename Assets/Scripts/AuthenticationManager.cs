@@ -26,4 +26,24 @@ public static class AuthenticationManager
             Debug.LogError("Error: " + request.error);
         }
     }
+
+    public static IEnumerator GetProfile(string apiUrl, string jwtToken)
+    {
+        UnityWebRequest request = UnityWebRequest.Get(apiUrl);
+        request.SetRequestHeader("Authorization", "Bearer " + jwtToken);
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            if (request.responseCode == 200)
+            {
+                string responseBody = request.downloadHandler.text;
+                yield return responseBody;
+            }
+        }
+        else
+        {
+            Debug.LogError("Error fetching profile information: " + request.error);
+        }
+    }
 }

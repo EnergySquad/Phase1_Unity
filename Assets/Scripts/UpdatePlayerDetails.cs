@@ -57,7 +57,7 @@ public class UpdatePlayerDetails : MonoBehaviour
             //clear the current input fields
             inputTextScript.ClearInputFields();
 
-            displayText.GetComponent<DisplayText>().GetProfileInformation();
+            displayText.GetComponent<DisplayText>().DisplayPlayerDetails();
 
             Debug.Log("Profile update successful!");
         }

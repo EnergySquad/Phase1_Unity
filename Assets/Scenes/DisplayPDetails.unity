@@ -3789,7 +3789,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 907589938}
         m_TargetAssemblyTypeName: DisplayText, Assembly-CSharp
-        m_MethodName: GetProfileInformation
+        m_MethodName: DisplayPlayerDetails
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
