@@ -18,7 +18,7 @@ public class InputText : MonoBehaviour
         {
             if (string.IsNullOrEmpty(inputField.text))
             {
-                Debug.Log("Input field("+ inputField.name + ")is empty. Taking value from DisplayText script.");
+                Debug.Log("Input field(" + inputField.name + ")is empty. Taking value from DisplayText script.");
                 // Get the input field name and take the relevant value from DisplayText.cs
                 switch (inputField.name)
                 {

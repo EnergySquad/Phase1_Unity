@@ -46,4 +46,28 @@ public static class AuthenticationManager
             Debug.LogError("Error fetching profile information: " + request.error);
         }
     }
+
+
+
+    public static IEnumerator LinkToQues(string apiUrl)
+    {
+        UnityWebRequest request = UnityWebRequest.Get(apiUrl);
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            if (request.responseCode == 200)
+            {
+                string responseBody = request.downloadHandler.text;
+                yield return responseBody;
+            }
+        }
+        else
+        {
+            Debug.LogError("Error fetching profile information: " + request.error);
+        }
+    }
+
+
+
 }
