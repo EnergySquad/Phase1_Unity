@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    public DisplayText displayTextAccess;
+    //public DisplayText displayTextAccess;
     public void LoadNextScene(string gamingSceneName)
     {
         if (!string.IsNullOrEmpty(gamingSceneName))

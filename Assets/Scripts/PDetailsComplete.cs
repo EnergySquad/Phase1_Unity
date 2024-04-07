@@ -34,7 +34,7 @@ public class PDetailesComplete : MonoBehaviour
             && !string.IsNullOrEmpty(profile.nic)
             && !string.IsNullOrEmpty(profile.phoneNumber)
             && !string.IsNullOrEmpty(profile.email)
-            && !string.IsNullOrEmpty(profile.profilePictureUrl);
+            || !string.IsNullOrEmpty(profile.profilePictureUrl);
     }
 
     public IEnumerator AuthenticateAndGetProfile()
