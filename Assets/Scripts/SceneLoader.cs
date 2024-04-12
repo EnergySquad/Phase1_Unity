@@ -19,6 +19,15 @@ public class SceneLoader : MonoBehaviour
     public void LoadProfilePage()
     {
         LoadNextScene("DisplayPDetails");
-        //displayTextAccess.GetComponent<DisplayText>().DisplayPlayerDetails();
+    }
+
+    public void LoadQuestionnairePage()
+    {
+        LoadNextScene("Questionnaire");
+    }
+
+    public void LoadGame()
+    {
+        LoadNextScene("Game");
     }
 }

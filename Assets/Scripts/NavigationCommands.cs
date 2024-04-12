@@ -125,17 +125,11 @@ public class NavigationCommands : MonoBehaviour
 
         if (IsQuestionnaireCompleted == "True")
         {
-            sceneLoader.GetComponent<SceneLoader>().LoadNextScene("Game");
+            sceneLoader.GetComponent<SceneLoader>().LoadGame();
         }
         else
         {
-            sceneLoader.GetComponent<SceneLoader>().LoadNextScene("Questionnaire");
+            sceneLoader.GetComponent<SceneLoader>().LoadQuestionnairePage();
         }
-    }
-
-    public void LinkToQuestions()
-    {
-        // Load the Questions scene
-        Application.OpenURL("https://docs.unity3d.com/ScriptReference/Application.OpenURL.html");
     }
 }
