@@ -30,4 +30,9 @@ public class SceneLoader : MonoBehaviour
     {
         LoadNextScene("Game");
     }
+
+    public void LoadWelcomeWindow()
+    {
+        LoadNextScene("Ingame");
+    }
 }

@@ -3,7 +3,6 @@ using UnityEngine.Networking;
 using System.Collections;
 using System;
 using UnityEngine.UI;
-//using Authenticator;
 
 public class DisplayText : MonoBehaviour
 {
@@ -15,7 +14,6 @@ public class DisplayText : MonoBehaviour
     public Text NIC;
     public Text PhoneNumber;
     public Text Email;
-    public Text ProfilePictureUrl;
 
     [Serializable]
     public class UserProfile
@@ -26,7 +24,6 @@ public class DisplayText : MonoBehaviour
         public string nic;
         public string phoneNumber;
         public string email;
-        public string profilePictureUrl;
     }
 
     [Serializable]
@@ -59,14 +56,12 @@ public class DisplayText : MonoBehaviour
             NIC.text = profileResponse.user.nic;
             PhoneNumber.text = profileResponse.user.phoneNumber;
             Email.text = profileResponse.user.email;
-            ProfilePictureUrl.text = profileResponse.user.profilePictureUrl;
 
             Debug.Log("Name: " + profileResponse.user.firstname + " " + profileResponse.user.lastname);
             Debug.Log("Username: " + profileResponse.user.username);
             Debug.Log("NIC: " + profileResponse.user.nic);
             Debug.Log("Phone Number: " + profileResponse.user.phoneNumber);
             Debug.Log("Email: " + profileResponse.user.email);
-            Debug.Log("Profile Picture URL: " + profileResponse.user.profilePictureUrl);
         }
         else
         {

@@ -6,32 +6,27 @@ using UnityEngine;
 
 public class CheckQuesCompleted : MonoBehaviour
 {
-    //public PopUpMessage popUpMsg;
-    //public Back welcomePage;
-
     public class Flag
     {
         public string flag;
     }
 
-    /*public void getQuesStatus()
-    {
-        StartCoroutine(CheckQuesStatus());
-    }*/
-
+    //Check if the questionnaire is completed
     public IEnumerator CheckQuesStatus()
     {
+        //Get the questionnaire status from the server
         IEnumerator getCoroutine = AuthenticationManager.LinkToQues("https://38cc307c-2fe1-4c2f-9187-3335b4f9cf8d.mock.pstmn.io/Flag");
         yield return StartCoroutine(getCoroutine);
         string responseBody = getCoroutine.Current as string;
 
+        //If the response is not null then set the status of the Questionnaire in the player prefs
         if (responseBody != null)
         {
             Flag Response = JsonUtility.FromJson<Flag>(responseBody);
             Debug.Log("Response=" + Response);
             string QuestionaireCompleted = Response.flag;
             Debug.Log("result=" + QuestionaireCompleted);
-            PlayerPrefs.SetString("IsQuestionnaireCompleted", QuestionaireCompleted);
+            PlayerPrefs.SetString("IsQuestionnaireCompleted", QuestionaireCompleted);   //Set the status of the Questionnaire in the player prefs
 
             yield return true;
         }

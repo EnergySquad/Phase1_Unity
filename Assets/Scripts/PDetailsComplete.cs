@@ -16,7 +16,6 @@ public class PDetailesComplete : MonoBehaviour
         public string nic;
         public string phoneNumber;
         public string email;
-        public string profilePictureUrl;
     }
 
     [Serializable]
@@ -33,15 +32,16 @@ public class PDetailesComplete : MonoBehaviour
             && !string.IsNullOrEmpty(profile.username)
             && !string.IsNullOrEmpty(profile.nic)
             && !string.IsNullOrEmpty(profile.phoneNumber)
-            && !string.IsNullOrEmpty(profile.email)
-            || !string.IsNullOrEmpty(profile.profilePictureUrl);
+            && !string.IsNullOrEmpty(profile.email);
     }
 
+    //Check if the player's profile details are complete
     public IEnumerator AuthenticateAndGetProfile()
     {
         string jwtToken = PlayerPrefs.GetString("JWTToken", "");
         Debug.Log("tokenInTheDisplay=" + jwtToken);
 
+        //Call the GetProfile method from AuthenticationManager
         IEnumerator getCoroutine = AuthenticationManager.GetProfile(apiUrl, jwtToken);
         yield return StartCoroutine(getCoroutine);
         string responseBody = getCoroutine.Current as string;

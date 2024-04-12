@@ -37,11 +37,7 @@ public class InputText : MonoBehaviour
                     case "EmailInputField":
                         InputList.Add(displayText.Email.text);
                         break;
-                    case "ProfilePictureUrlInputField":
-                        InputList.Add(displayText.ProfilePictureUrl.text);
-                        break;
                     default:
-                        // Handle other input fields if needed
                         break;
                 }
             }

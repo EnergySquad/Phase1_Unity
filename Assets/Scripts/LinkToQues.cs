@@ -22,9 +22,7 @@ public class LinkToQues : MonoBehaviour
 
     public IEnumerator LinkToQuestionnaire()
     {
-        /*IEnumerator QuesCoroutine = CheckQuesCompleted.CheckQuesStatus();
-        yield return StartCoroutine(getCoroutine);
-        string responseBody = getCoroutine.Current as string;*/
+        //Get the questionnaire status
         CheckQuesCompleted QuesCoroutine = gameObject.AddComponent<CheckQuesCompleted>();
         IEnumerator IsQuesCompleteCoroutine = QuesCoroutine.CheckQuesStatus();
         yield return StartCoroutine(IsQuesCompleteCoroutine);
@@ -35,6 +33,7 @@ public class LinkToQues : MonoBehaviour
         {
             string IsQuestionaireCompleted = PlayerPrefs.GetString("IsQuestionnaireCompleted");
 
+            //If the questionnaire is completed, then go back to the welcome page
             if (IsQuestionaireCompleted == "True")
             {
                 Debug.Log("Error Linking to Questions ");
@@ -46,11 +45,11 @@ public class LinkToQues : MonoBehaviour
                 {
                     NoOfClicks++;
                     Debug.Log("Linking to Questions");
-                    LinkToQuestions();
+                    LinkToQuestions();      //Link to the Questions page
                 }
                 else
                 {
-                    popUpMsg.GetComponent<PopUpMessage>().ClickButton();
+                    popUpMsg.GetComponent<PopUpMessage>().ClickButton();    //Show the pop-up message if the player clicks the button again without completing the questionnaire
                 }
 
             }
@@ -67,6 +66,3 @@ public class LinkToQues : MonoBehaviour
         Application.OpenURL("https://docs.unity3d.com/ScriptReference/Application.OpenURL.html");
     }
 }
-
-
-//https://38cc307c-2fe1-4c2f-9187-3335b4f9cf8d.mock.pstmn.io/Flag

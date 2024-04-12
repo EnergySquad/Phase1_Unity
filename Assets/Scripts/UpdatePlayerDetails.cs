@@ -1,4 +1,3 @@
-//correct one:-
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
@@ -28,38 +27,29 @@ public class UpdatePlayerDetails : MonoBehaviour
                           "\"lastname\": \"" + inputDetails[1] + "\", " +
                           "\"nic\": \"" + inputDetails[2] + "\", " +
                           "\"phoneNumber\": \"" + inputDetails[3] + "\", " +
-                          "\"email\": \"" + inputDetails[4] + "\", " +
-                          "\"profilePictureUrl\": \"" + inputDetails[5] + "\"}";
+                          "\"email\": \"" + inputDetails[4] + "\"}";
 
         Debug.Log("jsonData=" + jsonData);
 
-        // Convert JSON data to byte array
-        byte[] myData = System.Text.Encoding.UTF8.GetBytes(jsonData);
+        // Call the PutDetails method from AuthenticationManager
+        IEnumerator putCoroutine = AuthenticationManager.PutDetails(url, jwtToken, jsonData);
+        yield return StartCoroutine(putCoroutine);
+        bool isUpdated = (bool)putCoroutine.Current;
 
-        // Create UnityWebRequest for PUT request
-        UnityWebRequest request = UnityWebRequest.Put(url, myData);
-        request.method = UnityWebRequest.kHttpVerbPUT;
-        //www.method = UnityWebRequest.kHttpVerbPUT;
-        request.SetRequestHeader("accept", "*/*");
-        request.SetRequestHeader("Content-Type", "application/json");
-        request.SetRequestHeader("Authorization", "Bearer " + jwtToken);
-        
-        // Send the request
-        yield return request.SendWebRequest();
-
-        // Check if the request was successful
-        if (request.result != UnityWebRequest.Result.Success)
+        // Display the updated player details if the player details are updated successfully
+        if (isUpdated)
         {
-            Debug.Log(request.error);
-        }
-        else 
-        {
-            //clear the current input fields
+            // Clear the current input fields
             inputTextScript.ClearInputFields();
 
+            // Display the updated player details
             displayText.GetComponent<DisplayText>().DisplayPlayerDetails();
 
             Debug.Log("Profile update successful!");
+        }
+        else
+        {
+            Debug.LogError("Error while updating player details");
         }
     }
 }

@@ -1,50 +1,3 @@
-/*using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class NavigationCommands : MonoBehaviour
-{
-    public SceneLoader sceneLoader;
-
-    public void BackToWelcomePage()
-    {
-        StartCoroutine(LoadWelcomePage());
-    }
-
-    private IEnumerator LoadWelcomePage()
-    {
-        PDetailesComplete pdetailesComplete = gameObject.AddComponent<PDetailesComplete>();
-        IEnumerator playerDetailsCoroutine = pdetailesComplete.AuthenticateAndGetProfile();
-        yield return StartCoroutine(playerDetailsCoroutine);
-        Debug.Log("playerDetailsCoroutine: " + playerDetailsCoroutine);
-        bool IsPlayerDetailsComplete = (bool)playerDetailsCoroutine.Current;
-
-        Debug.Log("IsPlayerDetailsComplete: " + IsPlayerDetailsComplete);
-
-        if (IsPlayerDetailsComplete)
-        {
-            sceneLoader.GetComponent<SceneLoader>().LoadNextScene("Ingame");
-        }
-        else
-        {
-            sceneLoader.GetComponent<SceneLoader>().LoadProfilePage();
-        }
-    }
-
-    public void GoToProfilePage()
-    {
-        sceneLoader.GetComponent<SceneLoader>().LoadProfilePage();
-    }
-
-    public void Continue()
-    {
-        sceneLoader.GetComponent<SceneLoader>().LoadNextScene("Questionnaire");
-    }
-}*/
-
-
-///////////////////////////////////////////////////////////////////////////////
-///
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -59,6 +12,7 @@ public class NavigationCommands : MonoBehaviour
         StartCoroutine(LoadWelcomePage());
     }
 
+    //Load the welcome page if the player details are complete
     private IEnumerator LoadWelcomePage()
     {
         //Check if the player details are complete
@@ -70,9 +24,10 @@ public class NavigationCommands : MonoBehaviour
 
         Debug.Log("IsPlayerDetailsComplete: " + IsPlayerDetailsComplete);
 
+        //If the player details are complete, load the welcome page
         if (IsPlayerDetailsComplete)
         {
-            sceneLoader.GetComponent<SceneLoader>().LoadNextScene("Ingame");
+            sceneLoader.GetComponent<SceneLoader>().LoadWelcomeWindow();
         }
         else
         {
@@ -80,30 +35,19 @@ public class NavigationCommands : MonoBehaviour
         }
     }
 
+    //When the player wants to go to the profile page
     public void GoToProfilePage()
     {
         sceneLoader.GetComponent<SceneLoader>().LoadProfilePage();
     }
 
-    /*public void Continue()
-    {
-
-        string QFlag = PlayerPrefs.GetString("IsQuestionnaireCompleted");
-        if (QFlag == "True")
-        {
-            sceneLoader.GetComponent<SceneLoader>().LoadNextScene("Ingame");
-        }
-        else
-        {
-            sceneLoader.GetComponent<SceneLoader>().LoadNextScene("Questionnaire");
-        }
-    }*/
-
+    //When the player wants to exit the game it directs to the welcome page
     public void Exit()
     {
         BackToWelcomePage();
     }
 
+    //When the player wants to continue the game
     public void Continue()
     {
         StartCoroutine(ContinueGame());
@@ -115,14 +59,13 @@ public class NavigationCommands : MonoBehaviour
         CheckQuesCompleted quesDetails = gameObject.AddComponent<CheckQuesCompleted>();
         IEnumerator QuestionnaireCoroutine = quesDetails.CheckQuesStatus();
         yield return StartCoroutine(QuestionnaireCoroutine);
-        /*Debug.Log("playerDetailsCoroutine: " + QuestionnaireCoroutine);
-        bool IsQuestionnaireCompleted = (bool)QuestionnaireCoroutine.Current;*/
-        bool response = (bool)QuestionnaireCoroutine.Current;
-        Debug.Log("response: " + response);
+        /*bool response = (bool)QuestionnaireCoroutine.Current;
+        Debug.Log("response: " + response);*/
 
         string IsQuestionnaireCompleted = PlayerPrefs.GetString("IsQuestionnaireCompleted");
         Debug.Log("IsQuestionnaireCompleted: " + IsQuestionnaireCompleted);
 
+        //If the questionnaire is complete, load the game
         if (IsQuestionnaireCompleted == "True")
         {
             sceneLoader.GetComponent<SceneLoader>().LoadGame();

@@ -55,6 +55,7 @@ public class Login : MonoBehaviour
 
             Debug.Log("IsPlayerDetailsComplete: " + IsPlayerDetailsComplete);
 
+            //If the player details are complete, load the Welcome page else load the Profile page
             if (IsPlayerDetailsComplete)
             {
                 sceneLoader.GetComponent<SceneLoader>().LoadNextScene("Ingame");
