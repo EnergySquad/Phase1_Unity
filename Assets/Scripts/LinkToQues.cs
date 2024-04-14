@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class LinkToQues : MonoBehaviour
@@ -9,11 +10,7 @@ public class LinkToQues : MonoBehaviour
     private int NoOfClicks = 0;
     public PopUpMessage popUpMsg;
     public NavigationCommands welcomePage;
-
-    public class Flag
-    {
-        public string flag;
-    }
+    private string currentSceneName;
 
     public void QuestionnairePage()
     {
@@ -37,7 +34,8 @@ public class LinkToQues : MonoBehaviour
             if (IsQuestionaireCompleted == "True")
             {
                 Debug.Log("Error Linking to Questions ");
-                welcomePage.GetComponent<NavigationCommands>().BackToWelcomePage();
+                currentSceneName = SceneManager.GetActiveScene().name;
+                welcomePage.GetComponent<NavigationCommands>().GoToWelcomePage(currentSceneName);
             }
             else
             {

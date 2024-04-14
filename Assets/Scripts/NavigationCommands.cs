@@ -1,19 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NavigationCommands : MonoBehaviour
 {
     public SceneLoader sceneLoader;
     public CheckQuesCompleted linkToQues;
+    private string currentSceneName;
+    public PopUpMessage popUpMsg;
 
-    public void BackToWelcomePage()
+    /*public void BackToWelcomePage()
     {
         StartCoroutine(LoadWelcomePage());
+    }*/
+    public void GoToWelcomePage(string currentScene)
+    {
+        if (currentScene == "Login" || currentScene == "DisplayPDetails")
+        {
+            Debug.Log("currentScene1: " + currentScene);
+            StartCoroutine(LoadWelcomePage());
+        }
+        else
+        {
+            sceneLoader.GetComponent<SceneLoader>().LoadWelcomeWindow();
+        }
     }
 
     //Load the welcome page if the player details are complete
-    private IEnumerator LoadWelcomePage()
+    /*private IEnumerator LoadWelcomePage()
     {
         //Check if the player details are complete
         PDetailesComplete pdetailesComplete = gameObject.AddComponent<PDetailesComplete>();
@@ -33,6 +48,36 @@ public class NavigationCommands : MonoBehaviour
         {
             GoToProfilePage();
         }
+    }*/
+
+    private IEnumerator LoadWelcomePage()
+    {
+        //Check if the player details are complete
+        PDetailesComplete pdetailesComplete = gameObject.AddComponent<PDetailesComplete>();
+        IEnumerator playerDetailsCoroutine = pdetailesComplete.AuthenticateAndGetProfile();
+        yield return StartCoroutine(playerDetailsCoroutine);
+        Debug.Log("playerDetailsCoroutine: " + playerDetailsCoroutine);
+        bool IsPlayerDetailsComplete = (bool)playerDetailsCoroutine.Current;
+
+        Debug.Log("IsPlayerDetailsComplete: " + IsPlayerDetailsComplete);
+
+        if (IsPlayerDetailsComplete)
+        {
+            sceneLoader.GetComponent<SceneLoader>().LoadWelcomeWindow();
+        }
+        else
+        {
+            currentSceneName = SceneManager.GetActiveScene().name;
+            Debug.Log("CurrentScene = " + currentSceneName);
+            if (currentSceneName == "DisplayPDetails")
+            {
+                popUpMsg.GetComponent<PopUpMessage>().ClickButton();
+            }
+            else
+            {
+                GoToProfilePage();
+            }
+        }
     }
 
     //When the player wants to go to the profile page
@@ -44,7 +89,8 @@ public class NavigationCommands : MonoBehaviour
     //When the player wants to exit the game it directs to the welcome page
     public void Exit()
     {
-        BackToWelcomePage();
+        //BackToWelcomePage();
+        GoToWelcomePage("Game");
     }
 
     //When the player wants to continue the game

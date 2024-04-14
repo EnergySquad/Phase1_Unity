@@ -81,7 +81,7 @@ public static class AuthenticationManager
     }
 
     //Link to questionnaire
-    public static IEnumerator LinkToQues(string apiUrl)
+    public static IEnumerator GetQuestionnaireStatus(string apiUrl)
     {
         UnityWebRequest request = UnityWebRequest.Get(apiUrl);
         yield return request.SendWebRequest();

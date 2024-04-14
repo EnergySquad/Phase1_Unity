@@ -15,7 +15,7 @@ public class CheckQuesCompleted : MonoBehaviour
     public IEnumerator CheckQuesStatus()
     {
         //Get the questionnaire status from the server
-        IEnumerator getCoroutine = AuthenticationManager.LinkToQues("https://38cc307c-2fe1-4c2f-9187-3335b4f9cf8d.mock.pstmn.io/Flag");
+        IEnumerator getCoroutine = AuthenticationManager.GetQuestionnaireStatus("https://38cc307c-2fe1-4c2f-9187-3335b4f9cf8d.mock.pstmn.io/Flag");
         yield return StartCoroutine(getCoroutine);
         string responseBody = getCoroutine.Current as string;
 

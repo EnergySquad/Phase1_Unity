@@ -1,11 +1,14 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Login : MonoBehaviour
 {
     private const string apiKey = "NjVjNjA0MGY0Njc3MGQ1YzY2MTcyMmM4OjY1YzYwNDBmNDY3NzBkNWM2NjE3MjJiZQ";
     private const string baseUrl = "http://20.15.114.131:8080/api/login";
     public SceneLoader sceneLoader;
+    public NavigationCommands backToWelcomePage;
+    private string currentSceneName;
 
     public static Login Instance { get; private set; }
     public static string TokenKey { get; private set; } = "JWTToken";
@@ -46,24 +49,10 @@ public class Login : MonoBehaviour
             string token = authResponse.token;
             PlayerPrefs.SetString(TokenKey, token);
 
-            //Check the Player's profile details are complete or not
-            PDetailesComplete pdetailesComplete = gameObject.AddComponent<PDetailesComplete>();
-            IEnumerator playerDetailsCoroutine = pdetailesComplete.AuthenticateAndGetProfile();
-            yield return StartCoroutine(playerDetailsCoroutine);
-            Debug.Log("playerDetailsCoroutine: " + playerDetailsCoroutine);
-            bool IsPlayerDetailsComplete = (bool)playerDetailsCoroutine.Current;
-
-            Debug.Log("IsPlayerDetailsComplete: " + IsPlayerDetailsComplete);
-
-            //If the player details are complete, load the Welcome page else load the Profile page
-            if (IsPlayerDetailsComplete)
-            {
-                sceneLoader.GetComponent<SceneLoader>().LoadWelcomeWindow();
-            }
-            else
-            {
-                sceneLoader.GetComponent<SceneLoader>().LoadProfilePage();
-            }
+            currentSceneName = SceneManager.GetActiveScene().name;
+            Debug.Log("currentSceneNameInLogin: " + currentSceneName);
+            // Load the Next scene
+            backToWelcomePage.GetComponent<NavigationCommands>().GoToWelcomePage(currentSceneName);
 
 
         }
