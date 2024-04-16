@@ -33,6 +33,6 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadWelcomeWindow()
     {
-        LoadNextScene("Ingame");
+        LoadNextScene("WelcomePage");
     }
 }

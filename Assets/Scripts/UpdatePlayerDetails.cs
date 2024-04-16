@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class UpdatePlayerDetails : MonoBehaviour
 {
-    public string gamingSceneName = "Ingame"; // Name of the gaming scene to load
+    public string gamingSceneName = "WelcomePage"; // Name of the gaming scene to load
     public InputText inputTextScript; // Reference to your InputText script
     private string url = "http://20.15.114.131:8080/api/user/profile/update";
     public DisplayText displayText;
