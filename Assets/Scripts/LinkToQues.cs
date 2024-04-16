@@ -61,6 +61,6 @@ public class LinkToQues : MonoBehaviour
     public void LinkToQuestions()
     {
         // Load the Questions scene
-        Application.OpenURL("https://docs.unity3d.com/ScriptReference/Application.OpenURL.html");
+        Application.OpenURL("http://localhost:5173/");
     }
 }
