@@ -18,7 +18,7 @@ public class InputText : MonoBehaviour
         {
             if (string.IsNullOrEmpty(inputField.text))
             {
-                Debug.Log("Input field("+ inputField.name + ")is empty. Taking value from DisplayText script.");
+                Debug.Log("Input field(" + inputField.name + ")is empty. Taking value from DisplayText script.");
                 // Get the input field name and take the relevant value from DisplayText.cs
                 switch (inputField.name)
                 {
@@ -37,11 +37,7 @@ public class InputText : MonoBehaviour
                     case "EmailInputField":
                         InputList.Add(displayText.Email.text);
                         break;
-                    case "ProfilePictureUrlInputField":
-                        InputList.Add(displayText.ProfilePictureUrl.text);
-                        break;
                     default:
-                        // Handle other input fields if needed
                         break;
                 }
             }
@@ -52,20 +48,21 @@ public class InputText : MonoBehaviour
         }
 
         // Call to DisplayInputDetails method
-        DisplayInputDetails();
+        //DisplayInputDetails();
 
         // Call the UpdatePlayerDetails script to update the player details
         updatePlayerDetails.GetComponent<UpdatePlayerDetails>().UploadDetails();
     }
 
-    public void DisplayInputDetails()
+    /*public void DisplayInputDetails()
     {
         for (int i = 0; i < InputList.Count; i++)
         {
             Debug.Log("Input " + i + ": " + InputList[i]);
         }
-    }
+    }*/
 
+    // Clear the input fields 
     public void ClearInputFields()
     {
         InputField[] inputFields = GetComponentsInChildren<InputField>();

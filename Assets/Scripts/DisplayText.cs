@@ -7,12 +7,13 @@ using UnityEngine.UI;
 public class DisplayText : MonoBehaviour
 {
     private string apiUrl = "http://20.15.114.131:8080/api/user/profile/view";
+    
     public Text Name;
     public Text Lastname;
+    public Text Username;
     public Text NIC;
     public Text PhoneNumber;
     public Text Email;
-    public Text ProfilePictureUrl;
 
     [Serializable]
     public class UserProfile
@@ -23,7 +24,6 @@ public class DisplayText : MonoBehaviour
         public string nic;
         public string phoneNumber;
         public string email;
-        public string profilePictureUrl;
     }
 
     [Serializable]
@@ -32,58 +32,36 @@ public class DisplayText : MonoBehaviour
         public UserProfile user;
     }
 
-    public void GetProfileInformation()
+    public void DisplayPlayerDetails()
     {
-        StartCoroutine(GetProfileRequest());
+        StartCoroutine(AuthenticateAndGetProfile());
     }
 
-    private IEnumerator GetProfileRequest()
+
+    private IEnumerator AuthenticateAndGetProfile()
     {
         string jwtToken = PlayerPrefs.GetString("JWTToken", "");
-        Debug.Log("tokenInTheDisplay=" + jwtToken);
 
-        UnityWebRequest request = UnityWebRequest.Get(apiUrl);
+        //Call the GetProfile method from AuthenticationManager
+        IEnumerator getCoroutine = AuthenticationManager.GetProfile(apiUrl, jwtToken);
+        yield return StartCoroutine(getCoroutine);
+        string responseBody = getCoroutine.Current as string;
 
-        // Add Authorization header with JWT token
-        request.SetRequestHeader("Authorization", "Bearer " + jwtToken);
-
-        yield return request.SendWebRequest();
-
-        if (request.result == UnityWebRequest.Result.Success)
+        if (responseBody != null)
         {
-            if (request.responseCode == 200) // Check if the response code is OK
-            {
-                string responseBody = request.downloadHandler.text;
-                //Debug.Log("Profile Information: " + responseBody);
-                // Deserialize the JSON response
-                ProfileResponse profileResponse = JsonUtility.FromJson<ProfileResponse>(request.downloadHandler.text);
-
-                // Display player details
-                Debug.Log("Name: " + profileResponse.user.firstname + " " + profileResponse.user.lastname);
-                Debug.Log("Username: " + profileResponse.user.username);
-                Debug.Log("NIC: " + profileResponse.user.nic);
-                Debug.Log("Phone Number: " + profileResponse.user.phoneNumber);
-                Debug.Log("Email: " + profileResponse.user.email);
-                Debug.Log("Profile Picture URL: " + profileResponse.user.profilePictureUrl);
-
-                Name.text = profileResponse.user.firstname ;
-                Lastname.text = profileResponse.user.lastname;
-                NIC.text = profileResponse.user.nic;
-                PhoneNumber.text = profileResponse.user.phoneNumber;
-                Email.text = profileResponse.user.email;
-                ProfilePictureUrl.text = profileResponse.user.profilePictureUrl;
-
-
-
-            }
-            else
-            {
-                Debug.LogError("Error fetching profile information. Response code: " + request.responseCode);
-            }
+            ProfileResponse profileResponse = JsonUtility.FromJson<ProfileResponse>(responseBody);
+            
+            // Display the player details
+            Name.text = profileResponse.user.firstname;
+            Lastname.text = profileResponse.user.lastname;
+            Username.text = profileResponse.user.username;
+            NIC.text = profileResponse.user.nic;
+            PhoneNumber.text = profileResponse.user.phoneNumber;
+            Email.text = profileResponse.user.email;
         }
         else
         {
-            Debug.LogError("Error fetching profile information: " + request.error);
+            Debug.LogError("Error fetching profile information.");
         }
     }
 }
