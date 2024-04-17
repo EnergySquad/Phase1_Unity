@@ -1,3 +1,5 @@
+//POST, GRT, PUT requests for authentication, get questionnaire status
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

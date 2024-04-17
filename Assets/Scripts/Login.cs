@@ -39,22 +39,18 @@ public class Login : MonoBehaviour
         //Call the Authenticate method from AuthenticationManager
         IEnumerator authCoroutine = AuthenticationManager.Authenticate(baseUrl, requestBody);
         yield return StartCoroutine(authCoroutine);
-        Debug.Log("authCoroutine: " + authCoroutine);
         string jsonResponse = authCoroutine.Current as string;
 
         if (jsonResponse != null)
         {
-            Debug.Log("Received JSON response: " + jsonResponse);
+            // Save the token in PlayerPrefs
             AuthResponse authResponse = JsonUtility.FromJson<AuthResponse>(jsonResponse);
             string token = authResponse.token;
             PlayerPrefs.SetString(TokenKey, token);
 
             currentSceneName = SceneManager.GetActiveScene().name;
-            Debug.Log("currentSceneNameInLogin: " + currentSceneName);
             // Load the Next scene
             backToWelcomePage.GetComponent<NavigationCommands>().GoToWelcomePage(currentSceneName);
-
-
         }
         else
         {

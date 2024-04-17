@@ -41,8 +41,8 @@ public class DisplayText : MonoBehaviour
     private IEnumerator AuthenticateAndGetProfile()
     {
         string jwtToken = PlayerPrefs.GetString("JWTToken", "");
-        Debug.Log("tokenInTheDisplay=" + jwtToken);
 
+        //Call the GetProfile method from AuthenticationManager
         IEnumerator getCoroutine = AuthenticationManager.GetProfile(apiUrl, jwtToken);
         yield return StartCoroutine(getCoroutine);
         string responseBody = getCoroutine.Current as string;
@@ -50,18 +50,14 @@ public class DisplayText : MonoBehaviour
         if (responseBody != null)
         {
             ProfileResponse profileResponse = JsonUtility.FromJson<ProfileResponse>(responseBody);
+            
+            // Display the player details
             Name.text = profileResponse.user.firstname;
             Lastname.text = profileResponse.user.lastname;
             Username.text = profileResponse.user.username;
             NIC.text = profileResponse.user.nic;
             PhoneNumber.text = profileResponse.user.phoneNumber;
             Email.text = profileResponse.user.email;
-
-            Debug.Log("Name: " + profileResponse.user.firstname + " " + profileResponse.user.lastname);
-            Debug.Log("Username: " + profileResponse.user.username);
-            Debug.Log("NIC: " + profileResponse.user.nic);
-            Debug.Log("Phone Number: " + profileResponse.user.phoneNumber);
-            Debug.Log("Email: " + profileResponse.user.email);
         }
         else
         {

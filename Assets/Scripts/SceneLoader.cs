@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    //public DisplayText displayTextAccess;
+    // Load the next scene
     public void LoadNextScene(string gamingSceneName)
     {
         if (!string.IsNullOrEmpty(gamingSceneName))
@@ -16,21 +16,25 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
+    // Load the player profile page
     public void LoadProfilePage()
     {
         LoadNextScene("DisplayPDetails");
     }
 
+    // Load the questionnaire page
     public void LoadQuestionnairePage()
     {
         LoadNextScene("Questionnaire");
     }
 
+    // Load the game page
     public void LoadGame()
     {
         LoadNextScene("Game");
     }
 
+    // Load the welcome page
     public void LoadWelcomeWindow()
     {
         LoadNextScene("WelcomePage");

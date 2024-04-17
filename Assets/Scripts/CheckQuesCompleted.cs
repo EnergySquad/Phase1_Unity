@@ -22,10 +22,9 @@ public class CheckQuesCompleted : MonoBehaviour
         //If the response is not null then set the status of the Questionnaire in the player prefs
         if (responseBody != null)
         {
+            //Set the status of the Questionnaire in the player prefs
             Flag Response = JsonUtility.FromJson<Flag>(responseBody);
-            Debug.Log("Response=" + Response);
             string QuestionaireCompleted = Response.flag;
-            Debug.Log("result=" + QuestionaireCompleted);
             PlayerPrefs.SetString("IsQuestionnaireCompleted", QuestionaireCompleted);   //Set the status of the Questionnaire in the player prefs
 
             yield return true;

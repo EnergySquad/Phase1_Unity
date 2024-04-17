@@ -11,11 +11,11 @@ public class ExitGame : MonoBehaviour
     {
         if (Application.isEditor)
         {
-            UnityEditor.EditorApplication.isPlaying = false;
+            UnityEditor.EditorApplication.isPlaying = false;     // If the game is running in the Unity Editor, stop playing the scene.
         }
         else
         {
-            Application.Quit();
+            Application.Quit(); // Quit the game if it is running in a standalone build.
         }
     }
 }

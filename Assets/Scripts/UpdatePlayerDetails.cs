@@ -30,8 +30,6 @@ public class UpdatePlayerDetails : MonoBehaviour
                           "\"phoneNumber\": \"" + inputDetails[3] + "\", " +
                           "\"email\": \"" + inputDetails[4] + "\"}";
 
-        Debug.Log("jsonData=" + jsonData);
-
         // Call the PutDetails method from AuthenticationManager
         IEnumerator putCoroutine = AuthenticationManager.PutDetails(url, jwtToken, jsonData);
         yield return StartCoroutine(putCoroutine);

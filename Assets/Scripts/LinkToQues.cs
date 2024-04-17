@@ -19,12 +19,11 @@ public class LinkToQues : MonoBehaviour
 
     public IEnumerator LinkToQuestionnaire()
     {
-        //Get the questionnaire status
+        //Get the questionnaire status 
         CheckQuesCompleted QuesCoroutine = gameObject.AddComponent<CheckQuesCompleted>();
         IEnumerator IsQuesCompleteCoroutine = QuesCoroutine.CheckQuesStatus();
         yield return StartCoroutine(IsQuesCompleteCoroutine);
         bool response = (bool)IsQuesCompleteCoroutine.Current;
-        Debug.Log("response: " + response);
 
         if (response)
         {
@@ -33,7 +32,6 @@ public class LinkToQues : MonoBehaviour
             //If the questionnaire is completed, then go back to the welcome page
             if (IsQuestionaireCompleted == "True")
             {
-                Debug.Log("Error Linking to Questions ");
                 currentSceneName = SceneManager.GetActiveScene().name;
                 welcomePage.GetComponent<NavigationCommands>().GoToWelcomePage(currentSceneName);
             }
@@ -42,7 +40,6 @@ public class LinkToQues : MonoBehaviour
                 if (NoOfClicks == 0)
                 {
                     NoOfClicks++;
-                    Debug.Log("Linking to Questions");
                     LinkToQuestions();      //Link to the Questions page
                 }
                 else
@@ -60,7 +57,7 @@ public class LinkToQues : MonoBehaviour
 
     public void LinkToQuestions()
     {
-        // Load the Questions scene
+        // Load the Questionnaire web page
         Application.OpenURL("http://localhost:5173/");
     }
 }

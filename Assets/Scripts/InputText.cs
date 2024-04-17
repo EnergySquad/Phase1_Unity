@@ -48,20 +48,21 @@ public class InputText : MonoBehaviour
         }
 
         // Call to DisplayInputDetails method
-        DisplayInputDetails();
+        //DisplayInputDetails();
 
         // Call the UpdatePlayerDetails script to update the player details
         updatePlayerDetails.GetComponent<UpdatePlayerDetails>().UploadDetails();
     }
 
-    public void DisplayInputDetails()
+    /*public void DisplayInputDetails()
     {
         for (int i = 0; i < InputList.Count; i++)
         {
             Debug.Log("Input " + i + ": " + InputList[i]);
         }
-    }
+    }*/
 
+    // Clear the input fields 
     public void ClearInputFields()
     {
         InputField[] inputFields = GetComponentsInChildren<InputField>();

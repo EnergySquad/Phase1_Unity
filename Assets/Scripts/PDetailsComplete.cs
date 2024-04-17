@@ -24,7 +24,7 @@ public class PDetailesComplete : MonoBehaviour
         public UserProfile user;
     }
 
-
+    // Check if the player's profile details are complete
     bool IsProfileComplete(UserProfile profile)
     {
         return !string.IsNullOrEmpty(profile.firstname)

@@ -1,3 +1,5 @@
+//Functions which are used to navigate to different pages in the game.
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,15 +12,11 @@ public class NavigationCommands : MonoBehaviour
     private string currentSceneName;
     public PopUpMessage popUpMsg;
 
-    /*public void BackToWelcomePage()
-    {
-        StartCoroutine(LoadWelcomePage());
-    }*/
+    //When the player wants to go back to the welcome page
     public void GoToWelcomePage(string currentScene)
     {
         if (currentScene == "Login" || currentScene == "DisplayPDetails")
         {
-            Debug.Log("currentScene1: " + currentScene);
             StartCoroutine(LoadWelcomePage());
         }
         else
@@ -26,29 +24,6 @@ public class NavigationCommands : MonoBehaviour
             sceneLoader.GetComponent<SceneLoader>().LoadWelcomeWindow();
         }
     }
-
-    //Load the welcome page if the player details are complete
-    /*private IEnumerator LoadWelcomePage()
-    {
-        //Check if the player details are complete
-        PDetailesComplete pdetailesComplete = gameObject.AddComponent<PDetailesComplete>();
-        IEnumerator playerDetailsCoroutine = pdetailesComplete.AuthenticateAndGetProfile();
-        yield return StartCoroutine(playerDetailsCoroutine);
-        Debug.Log("playerDetailsCoroutine: " + playerDetailsCoroutine);
-        bool IsPlayerDetailsComplete = (bool)playerDetailsCoroutine.Current;
-
-        Debug.Log("IsPlayerDetailsComplete: " + IsPlayerDetailsComplete);
-
-        //If the player details are complete, load the welcome page
-        if (IsPlayerDetailsComplete)
-        {
-            sceneLoader.GetComponent<SceneLoader>().LoadWelcomeWindow();
-        }
-        else
-        {
-            GoToProfilePage();
-        }
-    }*/
 
     private IEnumerator LoadWelcomePage()
     {
@@ -63,19 +38,18 @@ public class NavigationCommands : MonoBehaviour
 
         if (IsPlayerDetailsComplete)
         {
-            sceneLoader.GetComponent<SceneLoader>().LoadWelcomeWindow();
+            sceneLoader.GetComponent<SceneLoader>().LoadWelcomeWindow();    //Load the welcome page
         }
         else
         {
             currentSceneName = SceneManager.GetActiveScene().name;
-            Debug.Log("CurrentScene = " + currentSceneName);
             if (currentSceneName == "DisplayPDetails")
             {
-                popUpMsg.GetComponent<PopUpMessage>().ClickButton();
+                popUpMsg.GetComponent<PopUpMessage>().ClickButton();   //Show the pop-up message if the player details are not complete
             }
             else
             {
-                GoToProfilePage();
+                GoToProfilePage();      //Go to the profile page if the player details are not complete
             }
         }
     }
@@ -93,7 +67,7 @@ public class NavigationCommands : MonoBehaviour
         GoToWelcomePage("Game");
     }
 
-    //When the player wants to continue the game
+    //When the player wants to continue the game it checks if the questionnaire is complete and then loads the game
     public void Continue()
     {
         StartCoroutine(ContinueGame());
@@ -105,20 +79,17 @@ public class NavigationCommands : MonoBehaviour
         CheckQuesCompleted quesDetails = gameObject.AddComponent<CheckQuesCompleted>();
         IEnumerator QuestionnaireCoroutine = quesDetails.CheckQuesStatus();
         yield return StartCoroutine(QuestionnaireCoroutine);
-        /*bool response = (bool)QuestionnaireCoroutine.Current;
-        Debug.Log("response: " + response);*/
 
+        //Set the questionnaire status in the player prefs
         string IsQuestionnaireCompleted = PlayerPrefs.GetString("IsQuestionnaireCompleted");
-        Debug.Log("IsQuestionnaireCompleted: " + IsQuestionnaireCompleted);
-
-        //If the questionnaire is complete, load the game
+        
         if (IsQuestionnaireCompleted == "True")
         {
-            sceneLoader.GetComponent<SceneLoader>().LoadGame();
+            sceneLoader.GetComponent<SceneLoader>().LoadGame(); //If the questionnaire is complete, load the game
         }
         else
         {
-            sceneLoader.GetComponent<SceneLoader>().LoadQuestionnairePage();
+            sceneLoader.GetComponent<SceneLoader>().LoadQuestionnairePage();    //If the questionnaire is not complete, load the questionnaire page
         }
     }
 }
