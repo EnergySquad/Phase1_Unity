@@ -14,6 +14,7 @@ public class DisplayText : MonoBehaviour
     public Text NIC;
     public Text PhoneNumber;
     public Text Email;
+    public Text MemberStatis;
 
     [Serializable]
     public class UserProfile
@@ -58,6 +59,7 @@ public class DisplayText : MonoBehaviour
             NIC.text = profileResponse.user.nic;
             PhoneNumber.text = profileResponse.user.phoneNumber;
             Email.text = profileResponse.user.email;
+            MemberStatis.text = "False";
         }
         else
         {
