@@ -12,8 +12,8 @@ public class GameAchievements : MonoBehaviour
 
     public class Score
     {
-        public string flag;
-        public string score;
+        public bool isFinished;
+        public float score;
     }
 
     public void GetAchievements()
@@ -24,7 +24,7 @@ public class GameAchievements : MonoBehaviour
     public IEnumerator getAchievements()
     {
         // Load the Achievements scene
-        IEnumerator getCoroutine = AuthenticationManager.GetQuestionnaireStatus("https://38cc307c-2fe1-4c2f-9187-3335b4f9cf8d.mock.pstmn.io/Flag");
+        IEnumerator getCoroutine = AuthenticationManager.GetQuestionnaireStatus("http://localhost:8080/questions/sendResults");
         yield return StartCoroutine(getCoroutine);
         string responseBody = getCoroutine.Current as string;
 
@@ -32,16 +32,7 @@ public class GameAchievements : MonoBehaviour
         {
             Score Response = JsonUtility.FromJson<Score>(responseBody);
             Debug.Log("Response=" + Response);
-            string StringScore = Response.score;
-            float Score;
-            if (float.TryParse(StringScore, out Score))
-            {
-                Debug.Log("Parsed float value: " + Score);
-            }
-            else
-            {
-                Debug.LogError("Error parsing float.");
-            }
+            float Score = Response.score;
             if (Score > 0.7)
             {
                 popUpScore.GetComponent<PopUpMessage>().ClickButton();
