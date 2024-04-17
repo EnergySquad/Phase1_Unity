@@ -31,7 +31,7 @@ public class SceneLoader : MonoBehaviour
     // Load the game page
     public void LoadGame()
     {
-        LoadNextScene("Game");
+        LoadNextScene("testScene");
     }
 
     // Load the welcome page

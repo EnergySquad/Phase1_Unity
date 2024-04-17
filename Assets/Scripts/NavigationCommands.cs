@@ -64,7 +64,7 @@ public class NavigationCommands : MonoBehaviour
     public void Exit()
     {
         //BackToWelcomePage();
-        GoToWelcomePage("Game");
+        GoToWelcomePage("testScene");
     }
 
     //When the player wants to continue the game it checks if the questionnaire is complete and then loads the game
